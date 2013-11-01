@@ -1,0 +1,30 @@
+{
+  "name": "flat-to-nested",
+  "version": "0.0.1",
+  "description": "Convert a hierarchy from flat to nested representation.",
+  "keywords": [
+    "tree",
+    "hierarchy",
+    "flat",
+    "nested",
+    "transform",
+    "parent",
+    "child"
+  ],
+  "homepage": "https://github.com/joaonuno/flat-to-nested-js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/joaonuno/flat-to-nested-js.git"
+
+  },
+  "license": "MIT",
+  "author": "João Nuno Silva <jnss81@gmail.com> (http://jnuno.com)",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "1.13.0",
+    "chai": "1.8.1"
+  }
+}
