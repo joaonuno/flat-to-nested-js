@@ -7,7 +7,7 @@ Convert a hierarchy from flat to nested representation.
 
 # Example
 
-```
+```js
 var FlatToNested, flatToNested, flat;
 
 FlatToNested = require('flat-to-nested');
