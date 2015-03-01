@@ -1,6 +1,6 @@
 {
   "name": "flat-to-nested",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Convert a hierarchy from flat to nested representation.",
   "keywords": [
     "tree",
@@ -15,7 +15,6 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/joaonuno/flat-to-nested-js.git"
-
   },
   "license": "MIT",
   "author": "João Nuno Silva <jnss81@gmail.com> (http://jnuno.com)",
