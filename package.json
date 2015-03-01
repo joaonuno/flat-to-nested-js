@@ -21,10 +21,13 @@
   "author": "João Nuno Silva <jnss81@gmail.com> (http://jnuno.com)",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "jshint index.js test/test.js && jscs index.js test/test.js"
   },
   "devDependencies": {
-    "mocha": "1.13.0",
-    "chai": "1.8.1"
+    "mocha": "2.1.0",
+    "chai": "2.1.0",
+    "jshint": "2.6.3",
+    "jscs": "1.11.3"
   }
 }

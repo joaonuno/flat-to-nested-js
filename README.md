@@ -5,7 +5,7 @@ Convert a hierarchy from flat to nested representation.
 
 [![Build Status](https://travis-ci.org/joaonuno/flat-to-nested-js.png)](https://travis-ci.org/joaonuno/flat-to-nested-js)
 
-# Example
+## Example
 
 ```js
 var FlatToNested, flatToNested, flat;
@@ -39,3 +39,35 @@ flatToNested.convert(flat);
 //		]
 //	}
 ```
+
+## Configuration
+
+The constructor accepts an optional object with some or all of these properties:
+
+```js
+flatToNested = new FlatToNested({
+	// The name of the property with the node id in the flat representation
+	id: 'id',
+	// The name of the property with the parent node id in the flat representation
+	parent: 'parent',
+	// The name of the property that will hold the children nodes in the nested representation
+	children: 'children'
+}});
+
+```
+
+## Contributing
+
+### Setup
+
+Fork this repository and run `npm install` on the project root folder to make sure you have all project dependencies installed.
+
+### Code Linting
+
+Run `npm run lint`
+
+This will check both source and tests for code correctness and style compliance.
+
+### Running Tests
+
+Run `npm test`

@@ -20,5 +20,7 @@
   "node": true,
   "white": true,
   "onevar": true,
-  "globals": {}
+  "globals": {
+    "require": false
+  }
 }
