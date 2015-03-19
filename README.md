@@ -20,7 +20,8 @@ flat = [
 	{id: 1}
 ];
 
-flatToNested.convert(flat);
+var nested = flatToNested.convert(flat);
+console.log(nested);
 
 //	{
 //		id: 1,
