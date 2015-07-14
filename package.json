@@ -21,12 +21,15 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "lint": "jshint index.js test/test.js && jscs index.js test/test.js"
+    "lint": "jshint index.js test/test.js && jscs index.js test/test.js",
+    "dist": "mkdir -p dist && browserify index.js -o dist/FlatToNested.js -s FlatToNested && uglifyjs dist/FlatToNested.js > dist/FlatToNested-min.js"
   },
   "devDependencies": {
     "mocha": "2.1.0",
     "chai": "2.1.0",
     "jshint": "2.6.3",
-    "jscs": "1.11.3"
+    "jscs": "1.11.3",
+    "browserify": "10.2.6",
+    "uglify-js": "2.4.23"
   }
 }
