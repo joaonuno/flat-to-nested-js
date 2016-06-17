@@ -42,7 +42,6 @@ module.exports = (function () {
           // Parent for this object is not yet in temp, adding it to pendingChildOf.
           initPush(parent, pendingChildOf, flatEl);
         }
-        delete flatEl[this.config.parent];
       }
       if (pendingChildOf[id] !== undefined) {
         // Current object has children pending for it. Adding these to the object.
