@@ -12,6 +12,7 @@ module.exports = (function () {
     this.config.id = config.id || 'id';
     this.config.parent = config.parent || 'parent';
     this.config.children = config.children || 'children';
+    this.config.options = config.options || { deleteParent: true };
   }
 
   /**
@@ -41,6 +42,9 @@ module.exports = (function () {
         } else {
           // Parent for this object is not yet in temp, adding it to pendingChildOf.
           initPush(parent, pendingChildOf, flatEl);
+        }
+        if(this.config.options.deleteParent){
+          delete flatEl[this.config.parent];
         }
       }
       if (pendingChildOf[id] !== undefined) {
