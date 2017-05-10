@@ -3,7 +3,7 @@ flat-to-nested
 
 Convert a hierarchy from flat to nested representation.
 
-[![Build Status](https://travis-ci.org/joaonuno/flat-to-nested-js.png)](https://travis-ci.org/joaonuno/flat-to-nested-js)
+[![Build Status](https://travis-ci.org/joaonuno/flat-to-nested-js.svg)](https://travis-ci.org/joaonuno/flat-to-nested-js)
 
 ## Example
 
