@@ -43,7 +43,7 @@ module.exports = (function () {
           // Parent for this object is not yet in temp, adding it to pendingChildOf.
           initPush(parent, pendingChildOf, flatEl);
         }
-        if(this.config.options.deleteParent){
+        if (this.config.options.deleteParent) {
           delete flatEl[this.config.parent];
         }
       }

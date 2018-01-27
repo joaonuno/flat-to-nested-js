@@ -219,26 +219,26 @@ describe('flatToNested', function () {
     });
   });
 
-  describe('using options to not delete the parent', function(){
+  describe('using options to not delete the parent', function () {
     var flatToNested;
 
     flatToNested = new FlatToNested({
-      options:{
-        deleteParent:false
+      options: {
+        deleteParent: false
       }
     });
 
     it('should have parent after convert', function () {
       var flat, expected, actual;
 
-      flat = [{id: 1},{id: 2, parent: 1}];
+      flat = [{id: 1}, {id: 2, parent: 1}];
 
       expected = {id: 1, children: [
-        { id: 2 , parent: 1 }
+        {id: 2, parent: 1}
       ]};
 
       actual = flatToNested.convert(flat);
       assert.deepEqual(actual, expected);
     });
-  })
+  });
 });
