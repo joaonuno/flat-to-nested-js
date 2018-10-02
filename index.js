@@ -64,21 +64,34 @@ module.exports = (function () {
     return nested;
   };
 
-  function initPush(arrayName, obj, toPush) {
-    if (obj[arrayName] === undefined) {
-      obj[arrayName] = [];
+  function getPushArray(arrayName, obj) {
+    if (Array.isArray(arrayName)) {
+      return arrayName.reduce(function(accumulator, currentValue, index, arr) {
+        if (accumulator[currentValue] === undefined) {
+          accumulator[currentValue] = index < arr.length - 1 ? {} : [];
+        }
+
+        return accumulator[currentValue];
+      }, obj)
+    } else {
+      if (obj[arrayName] === undefined) {
+        obj[arrayName] = [];
+      }
+
+      return obj[arrayName];
     }
-    obj[arrayName].push(toPush);
+  }
+
+  function initPush(arrayName, obj, toPush) {
+    getPushArray(arrayName, obj).push(toPush);
   }
 
   function multiInitPush(arrayName, obj, toPushArray) {
-    var len;
+    var len, array;
     len = toPushArray.length;
-    if (obj[arrayName] === undefined) {
-      obj[arrayName] = [];
-    }
+    array = getPushArray(arrayName, obj)
     while (len-- > 0) {
-      obj[arrayName].push(toPushArray.shift());
+      array.push(toPushArray.shift());
     }
   }
 

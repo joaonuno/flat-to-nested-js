@@ -241,4 +241,23 @@ describe('flatToNested', function () {
       assert.deepEqual(actual, expected);
     });
   });
+
+  describe('using advanced nested children property', function () {
+    var flatToNested;
+
+    flatToNested = new FlatToNested({
+      children: ['relationships', 'children']
+    });
+
+    it('should convert using the nested children property', function() {
+      var flat, expected, actual;
+
+      flat = [{id: 1}, {id: 2, parent: 1}];
+
+      expected = {id: 1, relationships: {children: [{id: 2}]}};
+
+      actual = flatToNested.convert(flat);
+      assert.deepEqual(actual, expected);
+    });
+  });
 });
