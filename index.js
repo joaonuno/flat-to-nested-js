@@ -64,6 +64,75 @@ module.exports = (function () {
     return nested;
   }
 
+  var ChildrenBased = function(config, roots) {
+    this.config = config;
+    this.roots = roots;
+    this.temp = {};
+    this.rootsTemp = {};
+    this.pendingChild = {};
+  }
+
+  ChildrenBased.prototype.processItem = function(id, el) {
+    var children = el[this.config.children],
+      i, len, child, childId, pending;
+
+    i = 0;
+
+    this.temp[id] = el;
+    this.rootsTemp[id] = el;
+
+    if (children !== undefined && Array.isArray(children)) {
+      for (i, len = children.length; i < len; i++) {
+        child = children[i];
+        if (typeof(child) === "object") {
+          childId = child[this.config.id];
+        } else {
+          childId = child;
+        }
+
+        if(this.rootsTemp[childId]) {
+          delete this.rootsTemp[childId]
+        }
+
+        if (this.temp[childId] !== undefined) {
+          // Child is in temp
+          children[i] = this.temp[childId];
+          delete this.temp[childId];
+        } else {
+          this.pendingChild[childId] = {
+            arr: children,
+            pos: i
+          }
+
+        }
+      }
+    }
+
+    if (this.pendingChild[id] !== undefined) {
+      pending = this.pendingChild[id];
+      pending.arr[pending.pos] = el;
+      delete this.pendingChild[id];
+      delete this.temp[id];
+      delete this.rootsTemp[id];
+    }
+  }
+
+  ChildrenBased.prototype.getRoots = function() {
+    var rootsTemp = this.rootsTemp,
+      roots = Object.keys(this.rootsTemp).map(function(key) {
+        return rootsTemp[key];
+      }), nested;
+    if (roots.length === 1) {
+      nested = roots[0];
+    } else if (roots.length > 1) {
+      nested = {};
+      nested[this.config.children] = roots;
+    } else {
+      nested = {};
+    }
+    return nested;
+  }
+
   /**
    * Create a new FlatToNested object.
    *
@@ -75,7 +144,7 @@ module.exports = (function () {
     this.config.id = config.id || 'id';
     this.config.parent = config.parent || 'parent';
     this.config.children = config.children || 'children';
-    this.config.options = config.options || { deleteParent: true };
+    this.config.options = config.options || { deleteParent: true, childrenBase: false };
   }
 
   /**
@@ -84,10 +153,14 @@ module.exports = (function () {
    * @param {array} flat The array with the hierachy flat representation.
    */
   FlatToNested.prototype.convert = function (flat) {
-    var i, len, id, flatEl;
+    var i, len, id, flatEl, base;
     i = 0;
 
-    var base = new ParentBased(this.config);
+    if (this.config.options.childrenBase) {
+      base = new ChildrenBased(this.config);
+    } else {
+      base = new ParentBased(this.config);
+    }
 
     for (i, len = flat.length; i < len; i++) {
       flatEl = flat[i];
