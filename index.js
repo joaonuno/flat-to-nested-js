@@ -30,7 +30,14 @@ module.exports = (function () {
     for (i, len = flat.length; i < len; i++) {
       flatEl = flat[i];
       id = flatEl[this.config.id];
-      parent = flatEl[this.config.parent];
+
+      if (Array.isArray(this.config.parent)) {
+        parent = this.config.parent.reduce(parentReducer, flatEl);
+      } else if (typeof this.config.parent === 'object' && Array.isArray(this.config.parent.object) && Array.isArray(this.config.parent.id)) {
+        parent = [].concat(this.config.parent.object, this.config.parent.id).reduce(parentReducer, flatEl);
+      } else {
+        parent = flatEl[this.config.parent];
+      }
       temp[id] = flatEl;
       if (parent === undefined || parent === null) {
         // Current object has no parent, so it's a root element.
@@ -44,7 +51,13 @@ module.exports = (function () {
           initPush(parent, pendingChildOf, flatEl);
         }
         if (this.config.options.deleteParent) {
-          delete flatEl[this.config.parent];
+          if (Array.isArray(this.config.parent)) {
+            this.config.parent.reduce(deleteParentReducer, flatEl);
+          } else if (typeof this.config.parent === 'object' && Array.isArray(this.config.parent.object) && Array.isArray(this.config.parent.id)) {
+            this.config.parent.object.reduce(deleteParentReducer, flatEl);
+          } else {
+            delete flatEl[this.config.parent];
+          }
         }
       }
       if (pendingChildOf[id] !== undefined) {
@@ -79,6 +92,19 @@ module.exports = (function () {
     }
     while (len-- > 0) {
       obj[arrayName].push(toPushArray.shift());
+    }
+  }
+
+  function parentReducer(accumulator, currentValue) {
+    if (accumulator)
+      return accumulator[currentValue];
+  }
+
+  function deleteParentReducer(accumulator, currentValue, index, arr) {
+    if (accumulator && index < arr.length - 1) {
+      return accumulator[currentValue];
+    } else {
+      delete accumulator[currentValue];
     }
   }
 
