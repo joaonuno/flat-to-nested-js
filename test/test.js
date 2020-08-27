@@ -241,4 +241,94 @@ describe('flatToNested', function () {
       assert.deepEqual(actual, expected);
     });
   });
+
+  describe('children based hierarchy', function() {
+    var flatToNested;
+
+    flatToNested = new FlatToNested({
+      options:{
+        childrenBase: true
+      }
+    });
+
+    it('should convert an empty array to an empty object', function () {
+      assert.deepEqual(flatToNested.convert([]), {});
+    });
+
+    it('should convert a one element array to an object without children', function () {
+      assert.deepEqual(flatToNested.convert([{id: 1, someKey: 'someValue'}]), {id: 1, someKey: 'someValue'});
+    });
+
+    describe("children id as objects", function() {
+      it('should convert when the children come after the parent', function () {
+        var flat, expected, actual;
+
+        flat = [{id: 1, children: [{id: 11}, {id: 12}]}, {id: 11, children: [{id: 111}]}, {id: 12, value: 1}, {id: 111, value: 2}];
+
+        expected = {id: 1, children: [
+          {id: 11, children: [
+            {id: 111, value: 2}
+          ]},
+          {id: 12, value: 1}
+        ]};
+
+        actual = flatToNested.convert(flat);
+
+        assert.deepEqual(actual, expected);
+      });
+
+      it('should convert when the children come before the parent', function () {
+        var flat, expected, actual;
+
+        flat = [{id: 12, value: 1}, {id: 111, value: 2}, {id: 11, children: [{id: 111}]}, {id: 1, children: [{id: 11}, {id: 12}]}, ];
+
+        expected = {id: 1, children: [
+          {id: 11, children: [
+            {id: 111, value: 2}
+          ]},
+          {id: 12, value: 1}
+        ]};
+
+        actual = flatToNested.convert(flat);
+
+        assert.deepEqual(actual, expected);
+      });
+    });
+
+    describe("children id as numbers", function() {
+      it('should convert when the children come after the parent', function () {
+        var flat, expected, actual;
+
+        flat = [{id: 1, children: [11, 12]}, {id: 11, children: [111]}, {id: 12, value: 1}, {id: 111, value: 2}];
+
+        expected = {id: 1, children: [
+          {id: 11, children: [
+            {id: 111, value: 2}
+          ]},
+          {id: 12, value: 1}
+        ]};
+
+        actual = flatToNested.convert(flat);
+
+        assert.deepEqual(actual, expected);
+      });
+
+      it('should convert when the children come before the parent', function () {
+        var flat, expected, actual;
+
+        flat = [{id: 12, value: 1}, {id: 111, value: 2}, {id: 11, children: [111]}, {id: 1, children: [11, 12]}, ];
+
+        expected = {id: 1, children: [
+          {id: 11, children: [
+            {id: 111, value: 2}
+          ]},
+          {id: 12, value: 1}
+        ]};
+
+        actual = flatToNested.convert(flat);
+
+        assert.deepEqual(actual, expected);
+      });
+    })
+  });
 });
