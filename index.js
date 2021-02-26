@@ -1,6 +1,24 @@
 module.exports = (function () {
   'use strict';
 
+  function initPush(arrayName, obj, toPush) {
+    if (obj[arrayName] === undefined) {
+      obj[arrayName] = [];
+    }
+    obj[arrayName].push(toPush);
+  }
+
+  function multiInitPush(arrayName, obj, toPushArray) {
+    var len;
+    len = toPushArray.length;
+    if (obj[arrayName] === undefined) {
+      obj[arrayName] = [];
+    }
+    while (len-- > 0) {
+      obj[arrayName].push(toPushArray.shift());
+    }
+  }
+
   /**
    * Create a new FlatToNested object.
    *
@@ -63,24 +81,6 @@ module.exports = (function () {
     }
     return nested;
   };
-
-  function initPush(arrayName, obj, toPush) {
-    if (obj[arrayName] === undefined) {
-      obj[arrayName] = [];
-    }
-    obj[arrayName].push(toPush);
-  }
-
-  function multiInitPush(arrayName, obj, toPushArray) {
-    var len;
-    len = toPushArray.length;
-    if (obj[arrayName] === undefined) {
-      obj[arrayName] = [];
-    }
-    while (len-- > 0) {
-      obj[arrayName].push(toPushArray.shift());
-    }
-  }
 
   return FlatToNested;
 })();

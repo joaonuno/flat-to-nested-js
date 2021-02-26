@@ -21,19 +21,19 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "lint": "jshint index.js test/test.js && jscs index.js test/test.js && npm run dtslint",
+    "lint": "jshint index.js test/test.js && eslint index.js test/test.js && npm run dtslint",
     "dist": "mkdir -p dist && browserify index.js -o dist/FlatToNested.js -s FlatToNested && uglifyjs dist/FlatToNested.js > dist/FlatToNested-min.js",
     "dtslint": "dtslint types"
   },
   "devDependencies": {
-    "browserify": "10.2.6",
-    "chai": "2.1.0",
-    "dtslint": "^3.7.0",
-    "jscs": "1.11.3",
-    "jshint": "^2.12.0",
-    "mocha": "2.1.0",
-    "typescript": "^3.8.3",
-    "uglify-js": "3.3.9"
+    "browserify": "17.0.0",
+    "chai": "4.3.0",
+    "dtslint": "4.0.7",
+    "eslint": "7.20.0",
+    "jshint": "2.12.0",
+    "mocha": "8.3.0",
+    "typescript": "4.2.2",
+    "uglify-js": "3.12.8"
   },
   "types": "types"
 }
