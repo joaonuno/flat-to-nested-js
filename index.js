@@ -42,8 +42,14 @@ module.exports = (function () {
     var i, len, temp, roots, id, parent, nested, pendingChildOf, flatEl;
     i = 0;
     roots = [];
-    temp = {};
-    pendingChildOf = {};
+    // Use prototype-less maps for the id/parent lookup tables. `id` and
+    // `parent` come straight from input records and are used as object keys,
+    // so a plain `{}` lets a record with `parent === '__proto__'` resolve
+    // `temp[parent]` to `Object.prototype` and pollute the global prototype
+    // via initPush. `Object.create(null)` has no inherited keys, so
+    // `__proto__`/`constructor`/`prototype` are ordinary (harmless) own keys.
+    temp = Object.create(null);
+    pendingChildOf = Object.create(null);
 
     for (i, len = flat.length; i < len; i++) {
       flatEl = flat[i];

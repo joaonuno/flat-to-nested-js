@@ -241,4 +241,27 @@ describe('flatToNested', function () {
       assert.deepEqual(actual, expected);
     });
   });
+
+  describe('prototype pollution (security)', function () {
+    it('should not pollute Object.prototype via a __proto__ parent', function () {
+      var flatToNested = new FlatToNested();
+      flatToNested.convert([{id: 1, parent: '__proto__', polluted: 'PWNED'}]);
+      assert.isUndefined(({}).polluted, 'Object.prototype.polluted must not be set');
+      assert.isUndefined(({}).children, 'Object.prototype.children must not be set');
+    });
+
+    it('should not pollute Object.prototype via a __proto__ id', function () {
+      var flatToNested = new FlatToNested();
+      flatToNested.convert([{id: '__proto__', x: 1}, {id: 2, parent: '__proto__'}]);
+      assert.isUndefined(({}).x, 'Object.prototype.x must not be set');
+      assert.isUndefined(({}).children, 'Object.prototype.children must not be set');
+    });
+
+    it('should still nest correctly when a key is named __proto__', function () {
+      var flatToNested = new FlatToNested();
+      var actual = flatToNested.convert([{id: 1}, {id: 2, parent: 1}, {id: 3, parent: 2}]);
+      assert.deepEqual(actual, {id: 1, children: [{id: 2, children: [{id: 3}]}]});
+    });
+  });
+
 });
