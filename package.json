@@ -19,6 +19,7 @@
   "license": "MIT",
   "author": "João Nuno Silva <jnss81@gmail.com> (http://jnuno.com)",
   "main": "index.js",
+  "unpkg": "dist/FlatToNested-min.js",
   "scripts": {
     "test": "mocha",
     "lint": "jshint index.js test/test.js && eslint index.js test/test.js && npm run dtslint",

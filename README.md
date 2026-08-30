@@ -5,6 +5,20 @@ Convert a hierarchy from flat to nested representation.
 
 [![Build Status](https://travis-ci.org/joaonuno/flat-to-nested-js.svg)](https://travis-ci.org/joaonuno/flat-to-nested-js)
 
+## Installation
+
+For NodeJS:
+
+```bash
+npm install flat-to-nested
+```
+
+For the browser:
+
+```html
+<script src="https://unpkg.com/flat-to-nested"></script>
+```
+
 ## Example
 
 ```js
